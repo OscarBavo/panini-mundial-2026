@@ -1,9 +1,11 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 export default function SubirPage() {
+  const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
   const [form, setForm] = useState({
     selection: '',
@@ -64,9 +66,20 @@ export default function SubirPage() {
   return (
     <div className="max-w-lg mx-auto px-4 py-8">
       <div className="mb-6">
-        <Link href="/" className="text-green-700 hover:text-green-800 text-sm font-medium inline-flex items-center gap-1">
-          ← Volver
-        </Link>
+        <div className="flex items-center justify-between">
+          <Link href="/" className="text-green-700 hover:text-green-800 text-sm font-medium inline-flex items-center gap-1">
+            ← Volver
+          </Link>
+          <button
+            onClick={async () => {
+              await fetch('/api/auth/logout', { method: 'POST' });
+              router.push('/login');
+            }}
+            className="text-sm text-gray-500 hover:text-gray-700 font-medium"
+          >
+            Cerrar Sesión
+          </button>
+        </div>
         <h1 className="text-2xl font-bold text-gray-900 mt-3">Subir Estampa Repetida</h1>
         <p className="text-gray-500 text-sm mt-1">
           Registra las estampas que tienes repetidas para ofrecer en intercambio

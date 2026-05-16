@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 type Sticker = {
@@ -25,6 +26,7 @@ type ExchangeRequest = {
 };
 
 export default function AdminPage() {
+  const router = useRouter();
   const [stickers, setStickers] = useState<Sticker[]>([]);
   const [loading, setLoading] = useState(true);
   const [viewingExchanges, setViewingExchanges] = useState<Sticker | null>(null);
@@ -52,6 +54,11 @@ export default function AdminPage() {
   useEffect(() => {
     loadStickers();
   }, [loadStickers]);
+
+  async function handleLogout() {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    router.push('/login');
+  }
 
   async function toggleActive(sticker: Sticker) {
     setToggling(sticker.id);
@@ -89,12 +96,20 @@ export default function AdminPage() {
             Gestiona tus estampas y solicitudes de intercambio
           </p>
         </div>
-        <Link
-          href="/subir"
-          className="bg-green-700 hover:bg-green-800 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors flex-shrink-0"
-        >
-          + Agregar
-        </Link>
+        <div className="flex gap-2 flex-shrink-0">
+          <button
+            onClick={handleLogout}
+            className="bg-gray-100 hover:bg-gray-200 text-gray-600 text-sm font-medium px-3 py-2 rounded-lg transition-colors"
+          >
+            Cerrar Sesión
+          </button>
+          <Link
+            href="/subir"
+            className="bg-green-700 hover:bg-green-800 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
+          >
+            + Agregar
+          </Link>
+        </div>
       </div>
 
       {/* Stats */}
