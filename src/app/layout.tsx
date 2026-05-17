@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
+import Footer from "./Footer";
 
 const geist = Geist({
   variable: "--font-geist-sans",
@@ -52,9 +53,7 @@ export default function RootLayout({
           </nav>
         </header>
         <main className="flex-1">{children}</main>
-        <footer className="bg-green-900 text-green-300 text-center text-xs py-3">
-          FIFA World Cup 2026™ · Álbum Panini
-        </footer>
+        <Footer />
       </body>
     </html>
   );
