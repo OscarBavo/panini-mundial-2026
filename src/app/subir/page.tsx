@@ -164,14 +164,17 @@ export default function SubirPage() {
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Número de estampa <span className="text-red-500">*</span>
             </label>
-            <input
-              type="text"
+            <select
               required
               value={form.number}
               onChange={e => setForm(f => ({ ...f, number: e.target.value }))}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              placeholder="Ej: 42"
-            />
+              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white"
+            >
+              <option value="" disabled>Nº</option>
+              {Array.from({ length: 20 }, (_, i) => i + 1).map(n => (
+                <option key={n} value={String(n)}>{n}</option>
+              ))}
+            </select>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
