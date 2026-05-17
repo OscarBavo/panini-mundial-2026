@@ -4,6 +4,21 @@ import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
+const GRUPOS: Record<string, string[]> = {
+  'A': ['México', 'Sudáfrica', 'Corea del Sur', 'Chequia'],
+  'B': ['Canadá', 'Suiza', 'Qatar', 'Bosnia y Herzegovina'],
+  'C': ['Brasil', 'Marruecos', 'Haití', 'Escocia'],
+  'D': ['Estados Unidos', 'Paraguay', 'Australia', 'Turquía'],
+  'E': ['Alemania', 'Curazao', 'Costa de Marfil', 'Ecuador'],
+  'F': ['Países Bajos', 'Japón', 'Túnez', 'Suecia'],
+  'G': ['Bélgica', 'Egipto', 'Irán', 'Nueva Zelanda'],
+  'H': ['España', 'Cabo Verde', 'Arabia Saudita', 'Uruguay'],
+  'I': ['Francia', 'Senegal', 'Noruega', 'Iraq'],
+  'J': ['Argentina', 'Argelia', 'Austria', 'Jordania'],
+  'K': ['Portugal', 'Colombia', 'Uzbekistán', 'Rep. Dem. del Congo'],
+  'L': ['Inglaterra', 'Croacia', 'Ghana', 'Panamá'],
+};
+
 export default function SubirPage() {
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
@@ -111,14 +126,21 @@ export default function SubirPage() {
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Selección <span className="text-red-500">*</span>
           </label>
-          <input
-            type="text"
+          <select
             required
             value={form.selection}
             onChange={e => setForm(f => ({ ...f, selection: e.target.value }))}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-            placeholder="Ej: México, Argentina, Brasil…"
-          />
+            className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white"
+          >
+            <option value="" disabled>Selecciona una selección…</option>
+            {Object.entries(GRUPOS).map(([grupo, equipos]) => (
+              <optgroup key={grupo} label={`Grupo ${grupo}`}>
+                {equipos.map(equipo => (
+                  <option key={equipo} value={equipo}>{equipo}</option>
+                ))}
+              </optgroup>
+            ))}
+          </select>
         </div>
 
         {/* Nombre del jugador */}
